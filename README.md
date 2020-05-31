@@ -1,4 +1,4 @@
-# drools-shopping-discount
+# Rule based shopping discount
 Seasonal shopping discount based on various category of customer. Drools rule engine is used to calculate discount based on multiple slabs.
 
 ### How to run the program
