@@ -1,0 +1,27 @@
+package com.smaity.prj.drools
+import com.smaity.prj.drools.domain.CartBill;
+import java.util.*;
+
+dialect  "mvel"
+
+rule "Regular Customer Discount - Slab 0-5K"
+    when
+        cartBill:CartBill(customerType == CustomerType.REGULAR && baseAmount.longValue() < 5000);
+    then
+       	cartBill.setDiscountedAmount(0.0);
+end
+
+rule "Regular Customer Discount - Slab 5K-10K"
+    when
+        cartBill:CartBill(customerType == CustomerType.REGULAR && baseAmount.longValue() >= 5000 && baseAmount.longValue() < 10000);
+    then
+       	cartBill.setDiscountedAmount(cartBill.getBaseAmount().subtract(5000).multiply(0.1));
+end
+
+
+rule "Regular Customer Discount - Slab 10K Above"
+    when
+        cartBill:CartBill(customerType == CustomerType.REGULAR && baseAmount.longValue() > 10000 );
+    then
+       	cartBill.setDiscountedAmount(cartBill.getBaseAmount().subtract(10000).multiply(0.2).add(5000*0.1));
+end
